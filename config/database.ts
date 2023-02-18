@@ -6,7 +6,7 @@
  */
 
 import Env from '@ioc:Adonis/Core/Env'
-import Application from '@ioc:Adonis/Core/Application'
+// import Application from '@ioc:Adonis/Core/Application'
 import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
 
 const databaseConfig: DatabaseConfig = {
@@ -34,21 +34,37 @@ const databaseConfig: DatabaseConfig = {
     | npm i sqlite3
     |
     */
-    sqlite: {
-      client: 'sqlite',
+    // sqlite: {
+    //   client: 'sqlite',
+    //   connection: {
+    //     filename: Application.tmpPath('db.sqlite3'),
+    //   },
+    //   pool: {
+    //     afterCreate: (conn, cb) => {
+    //       conn.run('PRAGMA foreign_keys=true', cb)
+    //     }
+    //   },
+    //   migrations: {
+    //     naturalSort: true,
+    //   },
+    //   useNullAsDefault: true,
+    //   healthCheck: false,
+    //   debug: false,
+    // },
+
+      pg: {
+      client: 'pg',
       connection: {
-        filename: Application.tmpPath('db.sqlite3'),
-      },
-      pool: {
-        afterCreate: (conn, cb) => {
-          conn.run('PRAGMA foreign_keys=true', cb)
-        }
+        host: Env.get('PGHOST'),
+        port: Env.get('PGPORT'),
+        user: Env.get('PGUSER'),
+        password: Env.get('PGPASSWORD', ''),
+        database: Env.get('PGDATABASE'),
       },
       migrations: {
         naturalSort: true,
       },
-      useNullAsDefault: true,
-      healthCheck: false,
+      healthCheck: true,
       debug: false,
     },
 
